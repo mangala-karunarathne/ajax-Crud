@@ -15,3 +15,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/categories/create',[CategoryController::class, 'create']);
+Route::get('/elfinder', 'Barryvdh\Elfinder\ElfinderController@showIndex');
