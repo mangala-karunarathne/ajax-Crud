@@ -85,19 +85,17 @@
             //     console.log(catType);
             // })
 
-            var formData = $('ajaxForm')[0];
+            var form = $('#ajaxForm')[0];
             $('#saveBtn').click(function() {
                 // Go with name for entire form data
-                var formData = new FormData();
+                var formData = new FormData(form);
                 // console.log(formData);
                 $.ajax({
                     url: '{{ route('categories.store') }}',
                     method: 'POST',
                     processData: false,
                     contentType: false,
-                    data: {
-                        formData
-                    },
+                    data: formData,
 
                     success: function(response) {
                         console.log(response);
