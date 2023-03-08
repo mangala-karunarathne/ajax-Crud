@@ -31,6 +31,7 @@
                         <div class="form-group mb-3">
                             <label for="name">Name</label>
                             <input type="text" id="name" name="name" class="form-control">
+                            <span id="nameError" class="text-danger"></span>
                         </div>
                         <div class="form-group mb-1">
                             <label for="type">Type</label>
@@ -39,6 +40,7 @@
                                 <option value="electronic">Electronic</option>
                                 <option value="power">Power</option>
                             </select>
+                            <span id="typeError" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -101,7 +103,11 @@
                         console.log(response);
                     },
                     error: function(error) {
-                        console.log(error);
+                        if (error) {
+                            console.log(error.responseJSON.errors.name);
+                            $('#nameError').html(error.responseJSON.errors.name);
+                            $('#typeError').html(error.responseJSON.errors.type);
+                        }
                     }
                 });
             });
