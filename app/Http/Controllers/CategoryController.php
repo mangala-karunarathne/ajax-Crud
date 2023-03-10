@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -14,10 +15,17 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required | min:2 | max: 10',
+            'name' => 'required | min:2 | max: 100',
             'type' => 'required',
         ]);
+// dd($request->type);
+        Category::create([
+            'name' => $request->name,
+            'type' => $request->type,
+        ]);
 
-        return 'success';
+        return response()->json([
+            'success' => 200
+        ]);
     }
 }
