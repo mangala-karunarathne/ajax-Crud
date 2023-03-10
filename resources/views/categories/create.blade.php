@@ -14,6 +14,7 @@
 
     <head>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
 </head>
 
@@ -29,18 +30,18 @@
                     </div>
                     <div class="modal-body">
                         <div class="form-group mb-3">
-                            <label for="name">Name</label>
-                            <input type="text" id="name" name="name" class="form-control">
-                            <span id="nameError" class="text-danger"></span>
+                            <label for="">Name</label>
+                            <input type="text" name="name" class="form-control">
+                            <span id="nameError" class="text-danger error-messages"></span>
                         </div>
                         <div class="form-group mb-1">
-                            <label for="type">Type</label>
-                            <select id="catType" name="catType" class="form-control">
+                            <label for="">Type</label>
+                            <select name="type" class="form-control">
                                 <option disabled selected>Choose Option</option>
                                 <option value="electronic">Electronic</option>
                                 <option value="power">Power</option>
                             </select>
-                            <span id="typeError" class="text-danger"></span>
+                            <span id="typeError" class="text-danger error-messages"></span>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -89,6 +90,10 @@
 
             var form = $('#ajaxForm')[0];
             $('#saveBtn').click(function() {
+
+
+                $('.error-messages').html('');
+
                 // Go with name for entire form data
                 var formData = new FormData(form);
                 // console.log(formData);
@@ -101,15 +106,24 @@
 
                     success: function(response) {
                         console.log(response);
+                        if (response.success == 200) {
+                            Swal.fire(
+                                'Good job !',
+                                'Your Data added Successfully !',
+                                'success'
+                            )
+                        }
                     },
                     error: function(error) {
                         if (error) {
-                            console.log(error.responseJSON.errors.name);
+                            console.log(error.responseJSON.errors);
                             $('#nameError').html(error.responseJSON.errors.name);
                             $('#typeError').html(error.responseJSON.errors.type);
                         }
                     }
                 });
+
+
             });
 
 
