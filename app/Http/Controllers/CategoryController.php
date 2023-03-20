@@ -10,7 +10,7 @@ class CategoryController extends Controller
 {
     public function index(Request $request)
     {
-        $categories = Category::all();
+        $categories = Category::select('id', 'name','type');
         if ($request->ajax()) {
             return DataTables::of($categories)
             ->addColumn('action', function($category){
