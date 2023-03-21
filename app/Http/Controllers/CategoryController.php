@@ -13,8 +13,9 @@ class CategoryController extends Controller
         $categories = Category::select('id', 'name','type');
         if ($request->ajax()) {
             return DataTables::of($categories)
-            ->addColumn('action', function($category){
-               return '<a class="btn btn-info">Edit</a>';
+            ->addColumn('action', function($row){
+               return '<a class="btn-sm btn btn-info editButton" data-id="'.$row->id.'">Edit</a>
+               <a class="btn-sm btn btn-danger delButton" data-id="'.$row->id.'">Delete</a>';
             })
             ->rawColumns(['action'])
             ->make(true);

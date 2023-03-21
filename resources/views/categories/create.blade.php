@@ -188,7 +188,10 @@
 
             });
 
-
+            // Edit Button Code
+            $('body').on('click','.editButton',function() {
+                console.log('clicked');
+            });
         })
     </script>
 
