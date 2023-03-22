@@ -190,7 +190,20 @@
 
             // Edit Button Code
             $('body').on('click','.editButton',function() {
-                console.log('clicked');
+                // console.log('clicked');
+                var id = $(this).data('id');
+                // console.log(id);
+
+                $.ajax({
+                    url: '{{url("categories",'')}}'+'/'+ id +'/edit',
+                    method: 'GET',
+                    success: function(response){
+                        console.log(response)
+                    },
+                    error: function(error){
+                        console.log(error)
+                    }
+                })
             });
         })
     </script>
