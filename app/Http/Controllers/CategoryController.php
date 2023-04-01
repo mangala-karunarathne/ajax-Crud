@@ -50,6 +50,10 @@ class CategoryController extends Controller
 
     public function edit($id)
     {
-        return $id;
+       $category = Category::find($id);
+       if(! $category) {
+        abort(404);
+       }
+       return $category;
     }
 }

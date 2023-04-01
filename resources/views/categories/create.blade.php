@@ -37,12 +37,12 @@
                     <div class="modal-body">
                         <div class="form-group mb-3">
                             <label for="">Name</label>
-                            <input type="text" name="name" class="form-control">
+                            <input type="text" name="name" id='name' class="form-control">
                             <span id="nameError" class="text-danger error-messages"></span>
                         </div>
                         <div class="form-group mb-1">
                             <label for="">Type</label>
-                            <select name="type" class="form-control">
+                            <select name="type" id='type' class="form-control">
                                 <option disabled selected>Choose Option</option>
                                 <option value="electronic">Electronic</option>
                                 <option value="power">Power</option>
@@ -123,7 +123,10 @@
                         data: 'type'
                     },
                     {
-                        data: 'action', name: 'action', orderble: false, searchable: false
+                        data: 'action',
+                        name: 'action',
+                        orderble: false,
+                        searchable: false
                     },
                 ]
 
@@ -189,18 +192,24 @@
             });
 
             // Edit Button Code
-            $('body').on('click','.editButton',function() {
+            $('body').on('click', '.editButton', function() {
                 // console.log('clicked');
                 var id = $(this).data('id');
                 // console.log(id);
 
                 $.ajax({
-                    url: '{{url("categories",'')}}'+'/'+ id +'/edit',
+                    url: '{{ url('categories', '') }}' + '/' + id + '/edit',
                     method: 'GET',
-                    success: function(response){
-                        console.log(response)
+                    success: function(response) {
+                        $('.ajax-modal').modal('show')
+                        $('#modal-title').html('Edit Category');
+                        $('#saveBtn').html('Update Category');
+
+                        $('#name').val(response.name);
+                        $('#type').empty().append('<option selected value="'+response.id+'">'+response.type+'</option>').selectmenu('refresh');
+                        console.log(response.type);
                     },
-                    error: function(error){
+                    error: function(error) {
                         console.log(error)
                     }
                 })
