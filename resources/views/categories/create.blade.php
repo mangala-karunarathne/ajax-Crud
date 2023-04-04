@@ -35,6 +35,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
+                        <input type="hidden" name="category_id" id="category_id">
                         <div class="form-group mb-3">
                             <label for="">Name</label>
                             <input type="text" name="name" id='name' class="form-control">
@@ -61,7 +62,7 @@
     </div>
     <div class="row">
         <div class="col-md-6 offset-3" style="margin-top: 100px">
-            <a class="btn btn-info mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal">Add Category</a>
+            <a class="btn btn-info mb-3" data-bs-toggle="modal" data-bs-target="#exampleModal" id="add_category">Add Category</a>
             <table id="category-table" class="table">
                 <thead class="thead-light">
                     <tr>
@@ -162,6 +163,11 @@
                     data: formData,
 
                     success: function(response) {
+
+                        $('#name').val('');
+                        $('#type').val('');
+                        $('#category_id').val('');
+
                         $('.ajax-modal').modal('hide')
                         console.log(response);
                         // if (response.success == 200) {
@@ -205,16 +211,31 @@
                         $('#modal-title').html('Edit Category');
                         $('#saveBtn').html('Update Category');
 
+
+                        $('#category_id').val(response.id);
                         $('#name').val(response.name);
-                        $('#type').empty().append('<option selected value="'+response.id+'">'+response.type+'</option>').selectmenu('refresh');
+                        var type = capitalize(response.type);
+                        $('#type').empty().append('<option selected value="' + response.id +
+                            '">' + type + '</option>');
                         console.log(response.type);
                     },
                     error: function(error) {
                         console.log(error)
                     }
-                })
+                });
             });
-        })
+
+            $('#add_category').click(function() {
+                $('#modal-title').html('Create Category');
+                $('#saveBtn').html('Save Category');
+            })
+
+            const capitalize = (s) => {
+                if (typeof s !== 'string')
+                    return ''
+                return s.charAt(0).toUpperCase() + s.slice(1)
+            }
+        });
     </script>
 
 </body>

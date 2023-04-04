@@ -29,23 +29,40 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required | min:2 | max: 100',
-            'type' => 'required',
-        ]);
-        // dd($request->type);
-        Category::create([
-            'name' => $request->name,
-            'type' => $request->type,
-        ]);
+        if($request->category_id != null){
+            $category = Category::find($request->category_id);
+            if(! $category){
+                abort(404);
+            }
+            $category->update([
+                'name' => $request->name,
+                'type' => $request->type,
+            ]);
+            return response()->json([
+                'success' => 'Category Updated Successfully',
+            ], 201);
+        }else{
 
-        // return response()->json([
-        //     'success' => 200
-        // ]);
+            $request->validate([
+                'name' => 'required | min:2 | max: 100',
+                'type' => 'required',
+            ]);
+            // dd($request->type);
+            Category::create([
+                'name' => $request->name,
+                'type' => $request->type,
+            ]);
 
-        return response()->json([
-            'success' => 'Category Saved Successfully',
-        ], 201);
+            // return response()->json([
+            //     'success' => 200
+            // ]);
+
+            return response()->json([
+                'success' => 'Category Saved Successfully',
+            ], 201);
+
+        }
+
     }
 
     public function edit($id)
